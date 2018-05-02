@@ -1,6 +1,7 @@
+import Connection from "./connection";
 const SESSION_KEY = "tr_session_key";
 const SIGN_IN_PATH = "/sign_in";
-const AUTHENTICATED_PATH = "/";
+const INDEX_PATH = "/";
 const notAuthenticatedPaths = [
   "/sign_in",
   "/sign_up",
@@ -21,16 +22,19 @@ class Session {
   }
 
   authenticate(email, password) {
-    // Fake logic going here
-    // TODO: Implement server request to receive JWT session
-    let self = this;
-    return new Promise(function(resolve, reject) {
-      setTimeout(() => {
-        self.saveToCache(new Date().getTime());
-        window.location.href = AUTHENTICATED_PATH;
-        resolve();
-      }, 2500);
+    return Connection.query("POST", "sign_in", {
+      "session": {
+        "email": email,
+        "password": password
+      }
+    }).then(response => {
+      console.log(response);
     });
+  }
+
+  logout() {
+    localStorage.clear();
+    window.location.href = SIGN_IN_PATH;
   }
 
   loadFromCache() {

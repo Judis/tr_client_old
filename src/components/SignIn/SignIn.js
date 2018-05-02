@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import UIkit from "uikit";
 import Session from "../../lib/session";
+import Connection from "../../lib/connection";
 import PageModalContainer from "../PageModalContainer/PageModalContainer";
+
+window.Connection = Connection;
 
 class SignIn extends Component {
   constructor(props) {
