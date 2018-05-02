@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import NavbarActions from "../NavbarActions/NavbarActions";
 
-class ProjectItem extends Component {
+class Navbar extends Component {
   render() {
     return (
       <nav
@@ -12,37 +14,12 @@ class ProjectItem extends Component {
           <Link className="uk-navbar-item uk-logo" to={{ pathname: "/" }}>
             i18n
           </Link>
-          <ul className="uk-breadcrumb">
-            <li>
-              <Link to={{ pathname: "/project_id" }}>Project Name</Link>
-            </li>
-            <li>
-              <Link to={{ pathname: "/project_id" }}>Locales</Link>
-            </li>
-          </ul>
+          <Breadcrumbs />
         </div>
-        <div className="uk-navbar-right">
-          <ul className="uk-navbar-nav">
-            <li>
-              <a>
-                <span data-uk-icon="icon: plus" />&nbsp; Add Locale
-              </a>
-            </li>
-            <li>
-              <a>User Name</a>
-              <div className="uk-navbar-dropdown">
-                <ul className="uk-nav uk-navbar-dropdown-nav">
-                  <li>
-                    <a>Log Out</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <NavbarActions />
       </nav>
     );
   }
 }
 
-export default ProjectItem;
+export default Navbar;
