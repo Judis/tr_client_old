@@ -1,9 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PasswordRecovery from './PasswordRecovery';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import PasswordRecovery from "./PasswordRecovery";
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<PasswordRecovery />, div);
+it("renders without crashing", () => {
+  const div = document.createElement("div");
+  ReactDOM.render(
+    <BrowserRouter>
+      <PasswordRecovery />
+    </BrowserRouter>,
+    div
+  );
   ReactDOM.unmountComponentAtNode(div);
 });
