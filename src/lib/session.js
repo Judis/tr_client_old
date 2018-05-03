@@ -22,13 +22,26 @@ class Session {
   }
 
   authenticate(email, password) {
-    return Connection.query("POST", "sign_in", {
-      "session": {
-        "email": email,
-        "password": password
-      }
-    }).then(response => {
-      console.log(response);
+    return new Promise((resolve, reject) => {
+      Connection.post("sign_in", {
+        session: {
+          email: email,
+          password: password
+        }
+      })
+        .then(response => response.json())
+        .then(json => {
+          if (json.status === "ok") {
+            this.saveToCache(json.data);
+            resolve();
+            window.location.href = INDEX_PATH;
+          } else {
+            reject(json);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
   }
 
@@ -38,11 +51,11 @@ class Session {
   }
 
   loadFromCache() {
-    this.session = localStorage.getItem(SESSION_KEY);
+    this.session = JSON.parse(localStorage.getItem(SESSION_KEY));
   }
 
   saveToCache(session) {
-    localStorage.setItem(SESSION_KEY, session);
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   }
 
   validatePath(positiveCallback) {
