@@ -14,3 +14,14 @@ const localStorageMock = (() => {
 })();
 
 global.localStorage = localStorageMock;
+
+
+const JSONMock = (() => {
+  return {
+    parse(str) {
+      return {};
+    }
+  };
+})();
+
+global.JSON = JSONMock;

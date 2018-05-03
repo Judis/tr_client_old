@@ -15,12 +15,12 @@ class SignIn extends Component {
     this.passwordRef = React.createRef();
   }
 
-  authenticationFailed(errorMessage) {
+  authenticationFailed() {
     this.setState({
       authRequestLoading: false
     });
 
-    UIkit.notification(errorMessage || "Something is going wrong");
+    UIkit.notification("Something is going wrong");
   }
 
   authenticate(event) {
