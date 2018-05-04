@@ -7,7 +7,7 @@ class ProjectItem extends Component {
       <li>
         <div data-uk-grid>
           <div className="uk-width-1-3@m">
-            <Link to={{ pathname: "/project_id" }}>Project Name</Link>
+            <Link to={{ pathname: `/${this.props.id}` }}>{this.props.name}</Link>
           </div>
           <div className="uk-width-1-3@m">
             <progress className="uk-progress" value="30" max="100" />

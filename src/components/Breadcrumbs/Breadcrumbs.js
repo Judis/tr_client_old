@@ -17,6 +17,9 @@ class Breadcrumbs extends Component {
           path="/:project_id/locales/:locale_id">
           <ul className="uk-breadcrumb">
             <li>
+              <Link to={{ pathname: "/" }}>Projects</Link>
+            </li>
+            <li>
               <Link to={{ pathname: "/project_id" }}>Project Name</Link>
             </li>
             <li>
@@ -29,6 +32,9 @@ class Breadcrumbs extends Component {
         </Route>
         <Route path="/:project_id">
           <ul className="uk-breadcrumb">
+            <li>
+              <Link to={{ pathname: "/" }}>Projects</Link>
+            </li>
             <li>
               <Link to={{ pathname: "/project_id" }}>Project Name</Link>
             </li>
