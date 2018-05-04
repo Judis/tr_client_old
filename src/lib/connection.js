@@ -18,6 +18,10 @@ export default class Connection {
     });
   }
 
+  static put(path, payload = null) {
+    return this.query("PUT", path, payload);
+  }
+
   static post(path, payload = null) {
     return this.query("POST", path, payload);
   }

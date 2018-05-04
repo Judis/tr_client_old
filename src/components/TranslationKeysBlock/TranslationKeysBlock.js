@@ -22,7 +22,9 @@ class TranslationKeysBlock extends Component {
 
   componentDidMount() {
     Connection.get(
-      `projects/${this.props.match.params.project_id}/locales/${this.props.match.params.locale_id}/keys_and_translations`
+      `projects/${this.props.match.params.project_id}/locales/${
+        this.props.match.params.locale_id
+      }/keys_and_translations`
     )
       .then(response => response.json())
       .then(json => {
@@ -40,7 +42,11 @@ class TranslationKeysBlock extends Component {
         );
       })
       .map(el => (
-        <TranslationKey translation_key={el} key={`translationKey-${el.translation_key_id}`} />
+        <TranslationKey
+          translation_key={el}
+          key={`translationKey-${el.translation_key_id}`}
+          onChooseKey={this.props.onChooseKey}
+        />
       ));
 
     return (
