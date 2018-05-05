@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import UIkit from "uikit";
-import authentication from "../../lib/authentication";
-import Connection from "../../lib/connection";
+import AuthenticationAPI from "../../lib/api/authentication";
 import PageModalContainer from "../PageModalContainer/PageModalContainer";
-
-window.Connection = Connection;
 
 class SignIn extends Component {
   constructor(props) {
@@ -30,7 +27,7 @@ class SignIn extends Component {
       authRequestLoading: true
     });
 
-    authentication(
+    AuthenticationAPI.auth(
       this.emailRef.current.value,
       this.passwordRef.current.value
     ).catch(this.authenticationFailedCallback.bind(this));

@@ -1,5 +1,3 @@
-// import Connection from "./connection";
-import authentication from "./authentication";
 import Navigation from "./navigation";
 
 const SESSION_KEY = "tr_session_key";
