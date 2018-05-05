@@ -26,7 +26,6 @@ class TranslationKeysBlock extends Component {
         this.props.match.params.locale_id
       }/keys_and_translations`
     )
-      .then(response => response.json())
       .then(json => {
         this.setState({
           translation_keys: json.data

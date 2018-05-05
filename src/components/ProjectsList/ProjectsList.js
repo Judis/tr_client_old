@@ -14,7 +14,6 @@ class ProjectsList extends Component {
 
   componentDidMount() {
     Connection.get("projects")
-      .then(response => response.json())
       .then(json => {
         this.setState({
           projects: json.data

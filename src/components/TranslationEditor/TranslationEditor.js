@@ -52,7 +52,6 @@ class TranslationEditor extends Component {
         }
       }
     )
-      .then(response => response.json())
       .then(this.saveCallback.bind(this));
   }
 
@@ -67,7 +66,6 @@ class TranslationEditor extends Component {
         }
       }
     )
-      .then(response => response.json())
       .then(this.saveCallback.bind(this));
   }
 

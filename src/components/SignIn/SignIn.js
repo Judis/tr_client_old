@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import UIkit from "uikit";
-import Session from "../../lib/session";
+import authentication from "../../lib/authentication";
 import Connection from "../../lib/connection";
 import PageModalContainer from "../PageModalContainer/PageModalContainer";
 
@@ -15,7 +15,7 @@ class SignIn extends Component {
     this.passwordRef = React.createRef();
   }
 
-  authenticationFailed() {
+  authenticationFailedCallback() {
     this.setState({
       authRequestLoading: false
     });
@@ -30,10 +30,10 @@ class SignIn extends Component {
       authRequestLoading: true
     });
 
-    Session.authenticate(
+    authentication(
       this.emailRef.current.value,
       this.passwordRef.current.value
-    ).catch(this.authenticationFailed.bind(this));
+    ).catch(this.authenticationFailedCallback.bind(this));
   }
 
   render() {

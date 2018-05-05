@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import Session from "../../lib/session";
+import logout from "../../lib/logout";
 
 class UserMenuItem extends Component {
-  logout() {
-    Session.logout();
-  }
-
   render() {
-    const logout = this.logout.bind(this);
-
     return (
       <li>
         <a>User Name</a>

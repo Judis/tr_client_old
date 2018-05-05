@@ -15,7 +15,6 @@ class LocalesList extends Component {
 
   componentDidMount() {
     Connection.get(`projects/${this.props.match.params.project_id}/locales`)
-      .then(response => response.json())
       .then(json => {
         this.setState({
           locales: json.data

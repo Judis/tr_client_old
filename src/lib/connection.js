@@ -7,15 +7,16 @@ export default class Connection {
     return fetch([API_VERSION, path].join(""), {
       body: payload ? JSON.stringify(payload) : null,
       method: method,
-      headers: Session.session && Session.session.token
-        ? {
-            Authorization: `Bearer: ${Session.session.token}`,
-            "Content-Type": "application/json"
-          }
-        : {
-            "Content-Type": "application/json"
-          }
-    });
+      headers:
+        Session.session && Session.session.token
+          ? {
+              Authorization: `Bearer: ${Session.session.token}`,
+              "Content-Type": "application/json"
+            }
+          : {
+              "Content-Type": "application/json"
+            }
+    }).then(response => response.json());
   }
 
   static put(path, payload = null) {
