@@ -47,7 +47,7 @@ class Session {
   }
 
   get username() {
-    return this.session.email;
+    return this.session && this.session.email ? this.session.email : null;
   }
 }
 

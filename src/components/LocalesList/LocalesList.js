@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import LocaleItem from "../LocaleItem/LocaleItem";
-import Navbar from "../Navbar/Navbar";
-import Container from "../Container/Container";
 import Connection from "../../lib/connection";
+import withContainer from "../../helpers/withContainer";
 
 class LocalesList extends Component {
   constructor(props) {
@@ -33,14 +32,9 @@ class LocalesList extends Component {
       />
     ));
     return (
-      <div>
-        <Navbar />
-        <Container>
-          <ul className="uk-list uk-list-divider">{localeItems}</ul>
-        </Container>
-      </div>
+      <ul className="uk-list uk-list-divider">{localeItems}</ul>
     );
   }
 }
 
-export default withRouter(LocalesList);
+export default withRouter(withContainer(LocalesList));
