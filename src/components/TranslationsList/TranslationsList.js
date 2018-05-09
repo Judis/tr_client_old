@@ -9,18 +9,18 @@ class TranslationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      edited_key: null
+      editedKey: null
     };
   }
 
   onChooseKey(key) {
     this.setState({
-      edited_key: key
+      editedKey: key
     });
   }
 
   render() {
-    const editedKey = this.state.edited_key;
+    const editedKey = this.state.editedKey;
 
     return (
       <div>
@@ -29,7 +29,7 @@ class TranslationsList extends Component {
           <div data-uk-grid>
             <TranslationKeysBlock onChooseKey={this.onChooseKey.bind(this)} />
             {editedKey && (
-              <TranslationEditor edited_key={this.state.edited_key} />
+              <TranslationEditor edited_key={this.state.editedKey} />
             )}
             {!editedKey && (
               <TranslationEditorPlaceholder />

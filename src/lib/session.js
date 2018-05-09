@@ -45,6 +45,10 @@ class Session {
   get isAuthenticated() {
     return this.session !== null;
   }
+
+  get username() {
+    return this.session.email;
+  }
 }
 
 export default new Session();
