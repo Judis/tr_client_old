@@ -22,9 +22,20 @@ class ProjectsList extends Component {
     });
   }
 
+  removeProject(projectId) {
+    ProjectsAPI.remove(projectId).then(() => {
+      this.loadProjects();
+    });
+  }
+
   render() {
     const projectItems = this.state.projects.map(el => (
-      <ProjectItem name={el.name} id={el.id} key={`item-${el.id}`} />
+      <ProjectItem
+        name={el.name}
+        id={el.id}
+        key={`item-${el.id}`}
+        removeProject={this.removeProject.bind(this)}
+      />
     ));
 
     return (

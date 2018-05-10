@@ -30,4 +30,8 @@ export default class Connection {
   static get(path, payload = null) {
     return this.query("GET", path, payload);
   }
+
+  static delete(path, payload = null) {
+    return this.query("DELETE", path, payload);
+  }
 }

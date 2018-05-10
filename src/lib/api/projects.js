@@ -38,6 +38,36 @@ export default class ProjectsAPI {
     });
   }
 
+  static remove(projectId) {
+    return new Promise((resolve, reject) => {
+      Connection.delete(`${PROJECT_URL}/${projectId}`)
+        .then(json => {
+          resolve(json.data);
+        })
+        .catch(errors => {
+          reject(errors);
+        });
+    });
+  }
+
+  static create(args) {
+    return new Promise((resolve, reject) => {
+      Connection.post(PROJECT_URL, {
+        project: args
+      })
+        .then(json => {
+          if (json.data && json.data.id) {
+            resolve(json.data);
+          } else {
+            reject(json.errors);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
   static validate(args) {
     return new Promise((resolve, reject) => {
       let errors = {};
@@ -50,24 +80,6 @@ export default class ProjectsAPI {
       } else {
         reject(errors);
       }
-    });
-  }
-
-  static create(args) {
-    return new Promise((resolve, reject) => {
-      Connection.post(PROJECT_URL, {
-        project: args
-      })
-        .then(json => {
-          if (json.data.id) {
-            resolve(json.data);
-          } else {
-            reject(json);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
     });
   }
 
