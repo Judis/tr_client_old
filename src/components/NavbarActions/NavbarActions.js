@@ -15,22 +15,26 @@ class NavbarActions extends Component {
           <Switch>
             <Route exact path="/">
               <li>
-                <a onClick={this.openModal.bind(this, 'add-project-modal')}>
+                <a onClick={this.openModal.bind(this, "add-project-modal")}>
                   <span data-uk-icon="icon: plus" />&nbsp; Add Project
                 </a>
               </li>
             </Route>
-            <Route
-              path="/:project_id/locales/:locale_id">
+            <Route path="/:project_id/locales/:locale_id">
               <li>
-                <a>
+                <a
+                  onClick={this.openModal.bind(
+                    this,
+                    "add-translation-key-modal"
+                  )}
+                >
                   <span data-uk-icon="icon: plus" />&nbsp; Add Key
                 </a>
               </li>
             </Route>
             <Route path="/:project_id">
               <li>
-                <a onClick={this.openModal.bind(this, 'add-locale-modal')}>
+                <a onClick={this.openModal.bind(this, "add-locale-modal")}>
                   <span data-uk-icon="icon: plus" />&nbsp; Add Locale
                 </a>
               </li>

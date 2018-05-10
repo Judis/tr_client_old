@@ -45,7 +45,10 @@ class LocalesList extends Component {
     return (
       <div>
         <ul className="uk-list uk-list-divider">{localeItems}</ul>
-        <AddLocaleModal onSuccess={this.loadLocales.bind(this)} projectId={this.props.match.params.project_id} />
+        <AddLocaleModal
+          onSuccess={this.loadLocales.bind(this)}
+          projectId={this.props.match.params.project_id}
+        />
       </div>
     );
   }
