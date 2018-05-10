@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ProjectItem from "../ProjectItem/ProjectItem";
 import withContainer from "../../helpers/withContainer";
-import Connection from "../../lib/connection";
+import ProjectsAPI from "../../lib/api/projects";
+import AddProjectModal from "../AddProjectModal/AddProjectModal";
 
 class ProjectsList extends Component {
   constructor(props) {
@@ -12,12 +13,13 @@ class ProjectsList extends Component {
   }
 
   componentDidMount() {
-    Connection.get("projects")
-      .then(json => {
-        this.setState({
-          projects: json.data
-        });
-      });
+    this.loadProjects();
+  }
+
+  loadProjects() {
+    ProjectsAPI.load().then(projects => {
+      this.setState({ projects });
+    });
   }
 
   render() {
@@ -26,7 +28,10 @@ class ProjectsList extends Component {
     ));
 
     return (
-      <ul className="uk-list uk-list-divider">{projectItems}</ul>
+      <div>
+        <ul className="uk-list uk-list-divider">{projectItems}</ul>
+        <AddProjectModal onSuccess={this.loadProjects.bind(this)} />
+      </div>
     );
   }
 }

@@ -10,7 +10,7 @@ class NavbarActions extends Component {
           <Switch>
             <Route exact path="/">
               <li>
-                <a>
+                <a data-uk-toggle="target: #add-project-modal">
                   <span data-uk-icon="icon: plus" />&nbsp; Add Project
                 </a>
               </li>
