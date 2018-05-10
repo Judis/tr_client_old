@@ -36,7 +36,7 @@ export default class TranslationKeyAPI {
       default_value,
       context
     };
-console.log(args, project_id);
+
     return new Promise((resolve, reject) => {
       this.validate(args)
         .then(() =>
