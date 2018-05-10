@@ -25,7 +25,7 @@ class NavbarActions extends Component {
             </Route>
             <Route path="/:project_id">
               <li>
-                <a>
+                <a data-uk-toggle="target: #add-locale-modal">
                   <span data-uk-icon="icon: plus" />&nbsp; Add Locale
                 </a>
               </li>

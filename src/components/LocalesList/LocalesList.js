@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import LocaleItem from "../LocaleItem/LocaleItem";
-import Connection from "../../lib/connection";
+import AddLocaleModal from "../AddLocaleModal/AddLocaleModal";
 import withContainer from "../../helpers/withContainer";
+import LocalesAPI from "../../lib/api/locales";
 
 class LocalesList extends Component {
   constructor(props) {
@@ -13,12 +14,21 @@ class LocalesList extends Component {
   }
 
   componentDidMount() {
-    Connection.get(`projects/${this.props.match.params.project_id}/locales`)
-      .then(json => {
-        this.setState({
-          locales: json.data
-        });
+    this.loadLocales();
+  }
+
+  loadLocales() {
+    LocalesAPI.load(this.props.match.params.project_id).then(locales => {
+      this.setState({
+        locales
       });
+    });
+  }
+
+  removeLocale(localeId, projectId) {
+    LocalesAPI.remove(localeId, projectId).then(() => {
+      this.loadLocales();
+    });
   }
 
   render() {
@@ -29,10 +39,14 @@ class LocalesList extends Component {
         project_id={locale.project_id}
         is_default={locale.is_default}
         key={`localeItem-${locale.id}`}
+        removeLocale={this.removeLocale.bind(this)}
       />
     ));
     return (
-      <ul className="uk-list uk-list-divider">{localeItems}</ul>
+      <div>
+        <ul className="uk-list uk-list-divider">{localeItems}</ul>
+        <AddLocaleModal onSuccess={this.loadLocales.bind(this)} projectId={this.props.match.params.project_id} />
+      </div>
     );
   }
 }

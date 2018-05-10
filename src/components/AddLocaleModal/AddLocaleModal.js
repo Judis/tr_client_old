@@ -1,65 +1,62 @@
 import React, { Component } from "react";
 import UIkit from "uikit";
 import PageModalInput from "../PageModalInput/PageModalInput";
-import ProjectsAPI from "../../lib/api/projects";
+import LocalesAPI from "../../lib/api/locales";
 import LOCALES_LIST from "../../constants/locales_list";
 
 const INITIAL_STATE = {
-  createProjectRequestLoading: false,
+  createLocaleRequestLoading: false,
   validationErrors: {}
 };
 
-class AddProjectModal extends Component {
+class AddLocaleModal extends Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.projectNameRef = React.createRef();
-    this.defaultLocaleRef = React.createRef();
+    this.localeRef = React.createRef();
     this.modalRef = React.createRef();
   }
 
-  addProjectFailedCallback(errors) {
+  addLocaleFailedCallback(errors) {
     this.setState({
-      createProjectRequestLoading: false,
+      createLocaleRequestLoading: false,
       validationErrors: errors
     });
   }
 
-  addProjectSuccessCallback() {
+  addLocaleSuccessCallback() {
     if (this.props.onSuccess && typeof this.props.onSuccess === "function") {
       this.props.onSuccess();
     }
     this.hide();
   }
 
-  addProject() {
+  addLocale() {
     this.setState({
       createProjectRequestLoading: true
     });
 
-    ProjectsAPI.add(
-      this.projectNameRef.current.value,
-      this.defaultLocaleRef.current.value
+    LocalesAPI.add(
+      this.localeRef.current.value,
+      this.props.projectId
     )
-      .then(this.addProjectSuccessCallback.bind(this))
-      .catch(this.addProjectFailedCallback.bind(this));
+      .then(this.addLocaleSuccessCallback.bind(this))
+      .catch(this.addLocaleFailedCallback.bind(this));
   }
 
   hide() {
     this.setState(INITIAL_STATE);
-    this.projectNameRef.current.value = "";
-    this.defaultLocaleRef.current.value = "";
+    this.localeRef.current.value = "";
     UIkit.modal(this.modalRef.current).hide();
   }
 
   render() {
-    const { createProjectRequestLoading, validationErrors } = this.state;
-    const projectNameErrors = validationErrors.name || [];
-    const defaultLocaleErrors = validationErrors.default_locale || [];
+    const { createLocaleRequestLoading, validationErrors } = this.state;
+    const localeErrors = validationErrors.locale || [];
     const localesList = Object.keys(LOCALES_LIST).map((key) => [key, LOCALES_LIST[key]]);
 
     return (
-      <div id="add-project-modal" data-uk-modal ref={this.modalRef}>
+      <div id="add-locale-modal" data-uk-modal ref={this.modalRef}>
         <div className="uk-modal-dialog uk-margin-auto-vertical">
           <button
             className="uk-modal-close-default"
@@ -67,22 +64,16 @@ class AddProjectModal extends Component {
             data-uk-close
           />
           <div className="uk-modal-header">
-            <h2 className="uk-modal-title">Add Project</h2>
+            <h2 className="uk-modal-title">Add Locale</h2>
           </div>
           <div className="uk-modal-body">
             <form>
               <fieldset className="uk-fieldset">
                 <PageModalInput
                   type="text"
-                  placeholder="Project Name"
-                  reference={this.projectNameRef}
-                  errors={projectNameErrors}
-                />
-                <PageModalInput
-                  type="text"
-                  placeholder="Default Locale"
-                  reference={this.defaultLocaleRef}
-                  errors={defaultLocaleErrors}
+                  placeholder="Locale Name"
+                  reference={this.localeRef}
+                  errors={localeErrors}
                   datalist={localesList}
                 />
               </fieldset>
@@ -100,12 +91,12 @@ class AddProjectModal extends Component {
             <button
               className="uk-button uk-button-primary"
               type="button"
-              onClick={this.addProject.bind(this)}
+              onClick={this.addLocale.bind(this)}
             >
               Save
             </button>
           </div>
-          {createProjectRequestLoading && (
+          {createLocaleRequestLoading && (
             <div className="uk-overlay-default uk-position-cover uk-text-center">
               <span data-uk-spinner="ratio: 2" className="uk-position-center" />
             </div>
@@ -116,4 +107,4 @@ class AddProjectModal extends Component {
   }
 }
 
-export default AddProjectModal;
+export default AddLocaleModal;

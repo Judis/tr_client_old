@@ -1,7 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import UIkit from "uikit";
 
 class LocaleItem extends Component {
+  remove() {
+    if (this.props.is_default) {
+      UIkit.modal.alert('You can\'t remove default locale').then(() => {});
+    } else {
+      UIkit.modal
+        .confirm(`Are you realy like remove ${this.props.locale} locale!`)
+        .then(
+          () => {
+            this.props.removeLocale(this.props.id, this.props.project_id);
+          },
+          () => {}
+        );
+    }
+  }
+
   render() {
     return (
       <li>
@@ -28,7 +44,12 @@ class LocaleItem extends Component {
           <div className="uk-width-auto uk-text-right">
             <a className="uk-margin-left uk-link-muted">Download</a>
             <a className="uk-margin-left uk-link-muted">Settings</a>
-            <a className="uk-margin-left uk-link-muted">Remove</a>
+            <a
+              className="uk-margin-left uk-link-muted"
+              onClick={this.remove.bind(this)}
+            >
+              Remove
+            </a>
           </div>
         </div>
       </li>
