@@ -1,13 +1,13 @@
 import Connection from "../connection";
 
-const ADD_PROJECT_URL = "projects";
+const PROJECT_URL = "projects";
 const NAME_IS_REQUIRED = "Project Name is required";
 const DEFAULT_LOCALE_IS_REQUIRED = "Default Locale is required";
 
 export default class ProjectsAPI {
   static load() {
     return new Promise((resolve, reject) => {
-      Connection.get("projects")
+      Connection.get(PROJECT_URL)
         .then(json => {
           resolve(json.data);
         })
@@ -55,7 +55,7 @@ export default class ProjectsAPI {
 
   static create(args) {
     return new Promise((resolve, reject) => {
-      Connection.post(ADD_PROJECT_URL, {
+      Connection.post(PROJECT_URL, {
         project: args
       })
         .then(json => {
