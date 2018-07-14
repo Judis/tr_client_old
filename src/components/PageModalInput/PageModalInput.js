@@ -12,16 +12,17 @@ class PageModalInput extends Component {
           )}
           <input
             className={`uk-input uk-width-1-1 ${
-              errors.length > 0 ? "uk-form-danger" : null
+              errors && errors.length > 0 ? "uk-form-danger" : null
             }`}
-
             data-uk-tooltip={
-              errors.length > 0 ? `title: ${errors[0]}; pos: right` : null
+              errors && errors.length > 0
+                ? `title: ${errors[0]}; pos: right`
+                : null
             }
             type={type}
             placeholder={placeholder}
             ref={reference}
-            list={this.props.datalist ? 'dataset' : null}
+            list={this.props.datalist ? "dataset" : null}
           />
           {this.props.datalist && (
             <datalist id="dataset">

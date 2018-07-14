@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import TranslationKey from "../TranslationKey/TranslationKey";
-import Connection from "../../lib/connection";
+import TranslationKeyAPI from "../../lib/api/translationKeys";
+import AddTranslationKeyModal from "../AddTranslationKeyModal/AddTranslationKeyModal";
 
 class TranslationKeysBlock extends Component {
   constructor(props) {
@@ -21,16 +22,18 @@ class TranslationKeysBlock extends Component {
   }
 
   componentDidMount() {
-    Connection.get(
-      `projects/${this.props.match.params.project_id}/locales/${
-        this.props.match.params.locale_id
-      }/keys_and_translations`
-    )
-      .then(json => {
-        this.setState({
-          translation_keys: json.data
-        });
+    this.loadTranslationKeys();
+  }
+
+  loadTranslationKeys() {
+    TranslationKeyAPI.loadWithTranslations(
+      this.props.match.params.project_id,
+      this.props.match.params.locale_id
+    ).then(translation_keys => {
+      this.setState({
+        translation_keys
       });
+    });
   }
 
   render() {
@@ -66,6 +69,10 @@ class TranslationKeysBlock extends Component {
           />
         </form>
         <ul className="uk-list uk-list-divider">{translationKeys}</ul>
+        <AddTranslationKeyModal
+          projectId={this.props.match.params.project_id}
+          onSuccess={this.loadTranslationKeys.bind(this)}
+        />
       </div>
     );
   }

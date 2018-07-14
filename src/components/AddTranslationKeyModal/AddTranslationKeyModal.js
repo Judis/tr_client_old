@@ -1,62 +1,66 @@
 import React, { Component } from "react";
 import UIkit from "uikit";
 import PageModalInput from "../PageModalInput/PageModalInput";
-import LocalesAPI from "../../lib/api/locales";
-import LOCALES_LIST from "../../constants/locales_list";
+import TranslationKeyAPI from "../../lib/api/translationKeys";
 
 const INITIAL_STATE = {
-  createLocaleRequestLoading: false,
+  createTranslationKeyRequestLoading: false,
   validationErrors: {}
 };
 
-class AddLocaleModal extends Component {
+class AddTranslationKeyModal extends Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.localeRef = React.createRef();
+    this.keyRef = React.createRef();
+    this.defaultValueRef = React.createRef();
+    this.contextRef = React.createRef();
     this.modalRef = React.createRef();
   }
 
-  addLocaleFailedCallback(errors) {
+  addTranslationKeyFailedCallback(errors) {
     this.setState({
-      createLocaleRequestLoading: false,
+      createTranslationKeyRequestLoading: false,
       validationErrors: errors
     });
   }
 
-  addLocaleSuccessCallback() {
+  addTranslationKeySuccessCallback() {
     if (this.props.onSuccess && typeof this.props.onSuccess === "function") {
       this.props.onSuccess();
     }
     this.hide();
   }
 
-  addLocale() {
+  addTranslationKey() {
     this.setState({
-      createLocaleRequestLoading: true
+      createTranslationKeyRequestLoading: true
     });
 
-    LocalesAPI.add(this.localeRef.current.value, this.props.projectId)
-      .then(this.addLocaleSuccessCallback.bind(this))
-      .catch(this.addLocaleFailedCallback.bind(this));
+    TranslationKeyAPI.add(
+      this.keyRef.current.value,
+      this.defaultValueRef.current.value,
+      this.contextRef.current.value,
+      this.props.projectId
+    )
+      .then(this.addTranslationKeySuccessCallback.bind(this))
+      .catch(this.addTranslationKeyFailedCallback.bind(this));
   }
 
   hide() {
     this.setState(INITIAL_STATE);
-    this.localeRef.current.value = "";
+    this.keyRef.current.value = "";
+    this.defaultValueRef.current.value = "";
+    this.contextRef.current.value = "";
     UIkit.modal(this.modalRef.current).hide();
   }
 
   render() {
-    const { createLocaleRequestLoading, validationErrors } = this.state;
-    const localeErrors = validationErrors.locale || [];
-    const localesList = Object.keys(LOCALES_LIST).map(key => [
-      key,
-      LOCALES_LIST[key]
-    ]);
+    const { createTranslationKeyRequestLoading, validationErrors } = this.state;
+    const keyErrors = validationErrors.key || [];
 
     return (
-      <div id="add-locale-modal" data-uk-modal ref={this.modalRef}>
+      <div id="add-translation-key-modal" data-uk-modal ref={this.modalRef}>
         <div className="uk-modal-dialog uk-margin-auto-vertical">
           <button
             className="uk-modal-close-default"
@@ -64,17 +68,26 @@ class AddLocaleModal extends Component {
             data-uk-close
           />
           <div className="uk-modal-header">
-            <h2 className="uk-modal-title">Add Locale</h2>
+            <h2 className="uk-modal-title">Add Translation Key</h2>
           </div>
           <div className="uk-modal-body">
             <form>
               <fieldset className="uk-fieldset">
                 <PageModalInput
                   type="text"
-                  placeholder="Locale Name"
-                  reference={this.localeRef}
-                  errors={localeErrors}
-                  datalist={localesList}
+                  placeholder="Translation Key"
+                  reference={this.keyRef}
+                  errors={keyErrors}
+                />
+                <PageModalInput
+                  type="text"
+                  placeholder="Default Value"
+                  reference={this.defaultValueRef}
+                />
+                <PageModalInput
+                  type="text"
+                  placeholder="Context"
+                  reference={this.contextRef}
                 />
               </fieldset>
             </form>
@@ -91,12 +104,12 @@ class AddLocaleModal extends Component {
             <button
               className="uk-button uk-button-primary"
               type="button"
-              onClick={this.addLocale.bind(this)}
+              onClick={this.addTranslationKey.bind(this)}
             >
               Save
             </button>
           </div>
-          {createLocaleRequestLoading && (
+          {createTranslationKeyRequestLoading && (
             <div className="uk-overlay-default uk-position-cover uk-text-center">
               <span data-uk-spinner="ratio: 2" className="uk-position-center" />
             </div>
@@ -107,4 +120,4 @@ class AddLocaleModal extends Component {
   }
 }
 
-export default AddLocaleModal;
+export default AddTranslationKeyModal;

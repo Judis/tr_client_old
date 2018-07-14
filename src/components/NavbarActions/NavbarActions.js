@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import UIkit from "uikit";
 import UserMenuItem from "../UserMenuItem/UserMenuItem";
 
 class NavbarActions extends Component {
+  openModal(modalId) {
+    UIkit.modal(document.getElementById(modalId)).show();
+  }
+
   render() {
     return (
       <div className="uk-navbar-right">
@@ -10,22 +15,26 @@ class NavbarActions extends Component {
           <Switch>
             <Route exact path="/">
               <li>
-                <a data-uk-toggle="target: #add-project-modal">
+                <a onClick={this.openModal.bind(this, "add-project-modal")}>
                   <span data-uk-icon="icon: plus" />&nbsp; Add Project
                 </a>
               </li>
             </Route>
-            <Route
-              path="/:project_id/locales/:locale_id">
+            <Route path="/:project_id/locales/:locale_id">
               <li>
-                <a>
+                <a
+                  onClick={this.openModal.bind(
+                    this,
+                    "add-translation-key-modal"
+                  )}
+                >
                   <span data-uk-icon="icon: plus" />&nbsp; Add Key
                 </a>
               </li>
             </Route>
             <Route path="/:project_id">
               <li>
-                <a data-uk-toggle="target: #add-locale-modal">
+                <a onClick={this.openModal.bind(this, "add-locale-modal")}>
                   <span data-uk-icon="icon: plus" />&nbsp; Add Locale
                 </a>
               </li>
