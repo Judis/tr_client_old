@@ -1,6 +1,6 @@
 import Connection from "../connection";
 
-const LOCALES_URL = "projects/:project_id/translation_keys";
+const TRANSLATION_KEYS_URL = "projects/:project_id/translation_keys";
 const KEY_IS_REQUIRED = "Translation Key is required";
 
 export default class TranslationKeyAPI {
@@ -52,38 +52,8 @@ export default class TranslationKeyAPI {
     });
   }
 
-  static remove(translationKeyId, projectId) {
-    return new Promise((resolve, reject) => {
-      Connection.delete(`${this.url(projectId)}/${translationKeyId}`)
-        .then(json => {
-          resolve(json.data);
-        })
-        .catch(errors => {
-          reject(errors);
-        });
-    });
-  }
-
-  static create(args, project_id) {
-    return new Promise((resolve, reject) => {
-      Connection.post(this.url(project_id), {
-        translation_key: args
-      })
-        .then(json => {
-          if (json.data && json.data.id) {
-            resolve(json.data);
-          } else {
-            reject(json.errors);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  }
-
   static url(project_id) {
-    return LOCALES_URL.replace(":project_id", project_id);
+    return TRANSLATION_KEYS_URL.replace(":project_id", project_id);
   }
 
   static validate(args) {
