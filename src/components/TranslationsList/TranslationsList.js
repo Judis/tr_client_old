@@ -24,10 +24,9 @@ class TranslationsList extends Component {
     return (
       <div data-uk-grid>
         <TranslationKeysBlock onChooseKey={this.onChooseKey.bind(this)} />
-        {editedKey && (
+        {editedKey ? (
           <TranslationEditor edited_key={this.state.editedKey} />
-        )}
-        {!editedKey && (
+        ) : (
           <TranslationEditorPlaceholder />
         )}
       </div>
