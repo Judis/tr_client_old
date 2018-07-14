@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import Connection from "../../lib/connection";
+import TranslationsAPI from "../../lib/api/translations";
 
 class TranslationEditor extends Component {
   constructor(props) {
@@ -40,42 +40,15 @@ class TranslationEditor extends Component {
     }
   }
 
-  createCurrentTranslation() {
-    Connection.post(
-      `projects/${this.props.match.params.project_id}/locales/${
-        this.props.match.params.locale_id
-      }/translations`,
-      {
-        "translation": {
-          "translation_key_id": this.props.edited_key.translation_key_id,
-          "value": this.state.translation
-        }
-      }
-    )
-      .then(this.saveCallback.bind(this));
-  }
-
-  updateCurrentTranslation() {
-    Connection.put(
-      `projects/${this.props.match.params.project_id}/locales/${
-        this.props.match.params.locale_id
-      }/translations/${this.props.edited_key.current_value.id}`,
-      {
-        "translation": {
-          "value": this.state.translation
-        }
-      }
-    )
-      .then(this.saveCallback.bind(this));
-  }
-
   saveTranslation(event) {
     event.preventDefault();
-    if (this.props.edited_key.current_value) {
-      this.updateCurrentTranslation();
-    } else {
-      this.createCurrentTranslation();
-    }
+    TranslationsAPI.save(
+      this.props.edited_key.current_value ? this.props.edited_key.current_value.id : null,
+      this.props.edited_key.translation_key_id,
+      this.state.translation,
+      this.props.match.params.project_id,
+      this.props.match.params.locale_id
+    ).then(this.saveCallback.bind(this));
   }
 
   render() {
