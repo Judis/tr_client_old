@@ -36,8 +36,8 @@ class TranslationKeysBlock extends Component {
     });
   }
 
-  render() {
-    const translationKeys = this.state.translation_keys
+  renderTranslationKeys() {
+    return this.state.translation_keys
       .filter(el => {
         return (
           this.state.filter === "" || el.key.indexOf(this.state.filter) > -1
@@ -50,6 +50,10 @@ class TranslationKeysBlock extends Component {
           onChooseKey={this.props.onChooseKey}
         />
       ));
+  }
+
+  render() {
+    const translationKeys = this.renderTranslationKeys();
 
     return (
       <div className="uk-width-1-4">
